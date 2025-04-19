@@ -1,6 +1,17 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { IconMenu2, IconX } from "@tabler/icons-react";
+import {
+  IconAdjustmentsHorizontal,
+  IconSettings,
+  IconTarget,
+  IconRocket,
+  IconReport,
+  IconLayoutGrid,
+  IconPalette,
+  IconChevronDown,
+  IconMenu2,
+  IconX,
+} from "@tabler/icons-react";
 import {
   motion,
   AnimatePresence,
@@ -8,7 +19,7 @@ import {
   useMotionValueEvent,
 } from "framer-motion";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import type { ReactNode, ElementType, ComponentPropsWithoutRef } from "react";
 import Image from "next/image";
 
@@ -23,11 +34,25 @@ interface NavBodyProps {
   visible?: boolean;
 }
 
+interface NavItem {
+  name: string;
+  link?: string;
+  description?: string;
+  children?: NavItem[];
+  triggerOnHover?: boolean;
+  icon?: React.ForwardRefExoticComponent<
+    Omit<React.SVGProps<SVGSVGElement>, "ref"> &
+    {
+        size?: string | number | undefined;
+        stroke?: string | number | undefined;
+    } &
+    React.RefAttributes<SVGSVGElement>
+  >;
+  comingSoon?: boolean;
+}
+
 interface NavItemsProps {
-  items: {
-    name: string;
-    link: string;
-  }[];
+  items: NavItem[];
   className?: string;
   onItemClick?: () => void;
 }
@@ -111,33 +136,159 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
 };
 
 export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
-  const [hovered, setHovered] = React.useState<number | null>(null);
+  const [hoveredItemIndex, setHoveredItemIndex] = useState<number | null>(null);
+  const [activeDropdownIndex, setActiveDropdownIndex] = useState<number | null>(null);
+  let leaveTimeout: NodeJS.Timeout | null = null;
+
+  const handleMouseEnter = (idx: number, hasChildren: boolean) => {
+    if (leaveTimeout) {
+      clearTimeout(leaveTimeout);
+      leaveTimeout = null;
+    }
+    setHoveredItemIndex(idx);
+    if (hasChildren) {
+      setActiveDropdownIndex(idx);
+    } else {
+       setActiveDropdownIndex(null);
+    }
+  };
+
+  const handleMouseLeave = (hasChildren: boolean) => {
+    if (hasChildren) {
+      leaveTimeout = setTimeout(() => {
+        setActiveDropdownIndex(null);
+        setHoveredItemIndex(null);
+        leaveTimeout = null;
+      }, 150);
+    } else {
+        setHoveredItemIndex(null);
+    }
+  };
+
+  const handleDropdownMouseEnter = () => {
+    if (leaveTimeout) {
+      clearTimeout(leaveTimeout);
+      leaveTimeout = null;
+    }
+  };
+
+  const handleDropdownMouseLeave = () => {
+    setActiveDropdownIndex(null);
+    setHoveredItemIndex(null);
+  };
 
   return (
     <motion.div
-      onMouseLeave={() => setHovered(null)}
       className={cn(
-        "absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-2 text-sm font-medium text-zinc-600 transition duration-200 hover:text-zinc-800 lg:flex lg:space-x-2",
+        "absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-1 text-sm font-medium text-zinc-600 transition duration-200 lg:flex lg:space-x-1",
         className,
       )}
     >
-      {items.map((item, idx) => (
-        <Link
-          onMouseEnter={() => setHovered(idx)}
-          onClick={onItemClick}
-          className="relative px-4 py-2 text-neutral-600 dark:text-neutral-300"
-          key={`link-${idx}`}
-          href={item.link}
-        >
-          {hovered === idx && (
-            <motion.div
-              layoutId="hovered"
-              className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800"
-            />
-          )}
-          <span className="relative z-20">{item.name}</span>
-        </Link>
-      ))}
+      {items.map((item, idx) => {
+        const isHoverTrigger = item.triggerOnHover && item.children && item.children.length > 0;
+        const isDropdownActive = activeDropdownIndex === idx;
+        
+        return (
+          <div 
+            key={idx}
+            className="relative"
+            onMouseEnter={() => handleMouseEnter(idx, !!isHoverTrigger)}
+            onMouseLeave={() => handleMouseLeave(!!isHoverTrigger)}
+          >
+            {isHoverTrigger ? (
+              <div 
+                className={cn(
+                    "relative flex cursor-default items-center gap-1 px-4 py-2 text-neutral-600 dark:text-neutral-300",
+                )}
+              >
+                {hoveredItemIndex === idx && !isDropdownActive && (
+                    <motion.div
+                      layoutId="hovered"
+                      className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                    />
+                  )}
+                <span className="relative z-20">{item.name}</span>
+                <IconChevronDown
+                  size={14}
+                  className={cn(
+                      "relative z-20 transition-transform duration-200",
+                      isDropdownActive ? "rotate-180" : ""
+                  )}
+                />
+              </div>
+            ) : (
+              <Link
+                onClick={onItemClick}
+                className="relative block px-4 py-2 text-neutral-600 dark:text-neutral-300"
+                href={item.link || "#"}
+              >
+                {hoveredItemIndex === idx && (
+                  <motion.div
+                    layoutId="hovered"
+                    className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  />
+                )}
+                <span className="relative z-20">{item.name}</span>
+              </Link>
+            )}
+
+            <AnimatePresence>
+              {isHoverTrigger && isDropdownActive && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 10, scale: 0.98, transition: { duration: 0.15 } }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                  className={cn(
+                    "absolute left-1/2 top-full z-[100] mt-3 w-[32rem] -translate-x-1/2 rounded-xl border p-5",
+                    "border-neutral-300 dark:border-neutral-700",
+                    "bg-white dark:bg-neutral-950",
+                    "shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]",
+                    "backdrop-blur-xl"
+                  )}
+                  onMouseEnter={handleDropdownMouseEnter}
+                  onMouseLeave={handleDropdownMouseLeave}
+                >
+                   <div className="grid grid-cols-3 gap-x-6 gap-y-5">
+                     {item.children?.map((child, childIdx) => {
+                       const Icon = child.icon;
+                       return (
+                         <div
+                           key={childIdx}
+                           className="group relative flex cursor-default flex-col gap-1 rounded-lg p-4 transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800/50"
+                          >
+                            {child.comingSoon && (
+                              <span className="absolute top-2 right-2 rounded-full bg-neutral-200 px-2 py-0.5 text-[10px] font-medium text-neutral-600 dark:bg-neutral-700 dark:text-neutral-300">
+                                Coming Soon
+                              </span>
+                            )}
+                            {Icon && (
+                              <Icon className="mb-1.5 size-5 text-neutral-600 dark:text-neutral-400 group-hover:text-neutral-800 dark:group-hover:text-neutral-200" stroke="1.5" />
+                            )}
+                            <div className="font-semibold text-neutral-800 dark:text-neutral-200">
+                              {child.name}
+                            </div>
+                            {child.description && (
+                               <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                                {child.description}
+                              </p>
+                            )}
+                         </div>
+                       );
+                     })}
+                   </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        );
+      })}
     </motion.div>
   );
 };
@@ -193,19 +344,80 @@ export const MobileNavMenu = ({
   className,
   isOpen,
   onClose,
-}: MobileNavMenuProps) => {
+  items,
+}: MobileNavMenuProps & { items: NavItem[] }) => {
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.2 }}
           className={cn(
-            "absolute inset-x-0 top-16 z-50 flex w-full flex-col items-start justify-start gap-4 rounded-lg bg-white px-4 py-8 shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] dark:bg-neutral-950",
-            className,
+            "absolute inset-x-0 top-16 z-50 flex w-full flex-col items-start justify-start gap-1 rounded-lg bg-white px-4 py-4 shadow-lg dark:bg-neutral-950",
+            className
           )}
         >
+          {items.map((item, idx) => {
+            const isDropdownTrigger = item.children && item.triggerOnHover;
+            return (
+              <React.Fragment key={idx}>
+                {isDropdownTrigger ? (
+                  <div className="flex w-full items-center gap-2 px-2 py-2 text-sm font-semibold text-neutral-500 dark:text-neutral-400">
+                    {item.icon && <item.icon className="size-4" stroke="1.5" />}
+                    {item.name}
+                  </div>
+                ) : (
+                  <a
+                    href={item.link || '#'}
+                    className="flex w-full items-center gap-2 rounded-md px-2 py-2 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-neutral-50"
+                    onClick={() => {
+                      if (!item.children) onClose();
+                    }}
+                  >
+                    {item.icon && <item.icon className="size-4" stroke="1.5" />}
+                    {item.name}
+                  </a>
+                )}
+                {item.children && (
+                  <div className="ml-4 flex flex-col gap-1 border-l border-neutral-200 pl-3 dark:border-neutral-800">
+                    {item.children.map((child, childIdx) => {
+                       const ChildIcon = child.icon;
+                       return (
+                          isDropdownTrigger ? (
+                            <div key={childIdx} className="relative flex items-center gap-2 px-2 py-1.5 text-sm text-neutral-600 dark:text-neutral-400">
+                               {ChildIcon && <ChildIcon className="size-4 shrink-0" stroke="1.5"/>}
+                               <span>{child.name}</span>
+                               {child.comingSoon && (
+                                 <span className="ml-auto rounded-full bg-neutral-200 px-1.5 py-0.5 text-[9px] font-medium text-neutral-500 dark:bg-neutral-700 dark:text-neutral-300">
+                                   Soon
+                                 </span>
+                               )}
+                            </div>
+                           ) : (
+                             <a
+                              key={childIdx}
+                              href={child.link || '#'}
+                              className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-50"
+                              onClick={onClose}
+                             >
+                                {ChildIcon && <ChildIcon className="size-4 shrink-0" stroke="1.5"/>}
+                                <span>{child.name}</span>
+                                {child.comingSoon && (
+                                  <span className="ml-auto rounded-full bg-neutral-200 px-1.5 py-0.5 text-[9px] font-medium text-neutral-500 dark:bg-neutral-700 dark:text-neutral-300">
+                                    Soon
+                                  </span>
+                                )}
+                              </a>
+                           )
+                       );
+                     })}
+                  </div>
+                )}
+              </React.Fragment>
+            );
+          })}
           {children}
         </motion.div>
       )}
