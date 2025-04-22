@@ -296,7 +296,7 @@ const SkeletonFive = () => {
           className="rounded-full h-10 w-10"
         />
         <p className="text-xs text-neutral-500">
-          How can I improve my Facebook ad campaign's conversion rate for my e-commerce store?
+          How can I improve my Facebook ad campaign&apos;s conversion rate for my e-commerce store?
         </p>
       </motion.div>
       <motion.div

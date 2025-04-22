@@ -10,7 +10,7 @@ const pricingColumnVariants = cva(
   {
     variants: {
       variant: {
-        default: "hidden lg:flex",
+        default: "",
         glow: "after:content-[''] after:absolute after:-top-[128px] after:left-1/2 after:h-[128px] after:w-[100%] after:max-w-[960px] after:-translate-x-1/2 after:rounded-[50%] dark:after:bg-foreground/30 after:blur-[72px]",
         "glow-brand":
           "after:content-[''] after:absolute after:-top-[128px] after:left-1/2 after:h-[128px] after:w-[100%] after:max-w-[960px] after:-translate-x-1/2 after:rounded-[50%] after:bg-[#11FC97B3] after:blur-[72px]",

@@ -127,7 +127,7 @@ export default function Pricing({
         <PricingFrequencyToggle onFrequencyChange={setFrequency} initialFrequency={frequency} />
 
         {plans !== false && plans.length > 0 && (
-          <div className="mt-8 max-w-container mx-auto grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 max-w-container mx-auto grid grid-cols-1 gap-8 md:grid-cols-3 lg:grid-cols-3">
             {plans.map((plan) => {
               return (
                 <PricingColumn

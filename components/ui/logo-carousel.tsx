@@ -8,10 +8,7 @@ import React, {
 } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import {
-  MotionValue,
-  useMotionValue,
-  useScroll,
-  useTransform,
+  // Removed unused MotionValue, useMotionValue, useScroll, useTransform imports
 } from "motion/react"
 
 interface Logo {

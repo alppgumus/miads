@@ -6,7 +6,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
-import { GradientHeading } from "@/components/ui/gradient-heading"
 
 // Pricing specific FAQ items based on the image
 const pricingFaqItems = [

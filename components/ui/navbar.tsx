@@ -1,12 +1,7 @@
 "use client";
 import React, {
-  Children,
-  cloneElement,
-  isValidElement,
   ReactNode,
   useState,
-  useRef,
-  useEffect,
 } from 'react'
 import {
   AnimatePresence,
@@ -16,7 +11,6 @@ import {
 } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { ChevronDown, Menu, X } from 'lucide-react'
-import { Button, buttonVariants } from '@/components/ui/button'
 import Link from 'next/link'
 
 interface NavbarProps {
@@ -342,6 +336,14 @@ export const MobileNavMenu = ({
   onClose,
   items,
 }: MobileNavMenuProps & { items: NavItem[] }) => {
+  const [expandedItems, setExpandedItems] = useState<number[]>([]);
+
+  const toggleExpand = (idx: number) => {
+    setExpandedItems(prev => 
+      prev.includes(idx) ? prev.filter(i => i !== idx) : [...prev, idx]
+    );
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -356,65 +358,68 @@ export const MobileNavMenu = ({
           )}
         >
           {items.map((item, idx) => {
-            const isDropdownTrigger = item.children && item.triggerOnHover;
+            const hasChildren = item.children && item.children.length > 0;
+            const isExpanded = expandedItems.includes(idx);
+
             return (
               <React.Fragment key={idx}>
-                {isDropdownTrigger ? (
-                  <div className="flex w-full items-center gap-2 px-2 py-2 text-sm font-semibold text-neutral-500 dark:text-neutral-400">
-                    {item.icon && <item.icon className="size-4" stroke="1.5" />}
-                    {item.name}
-                  </div>
+                {hasChildren ? (
+                  <button 
+                    className="flex w-full items-center justify-between gap-2 rounded-md px-2 py-2 text-left text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-neutral-50"
+                    onClick={() => toggleExpand(idx)}
+                  >
+                    <span className="flex items-center gap-2">
+                      {item.icon && <item.icon className="size-4" stroke="1.5" />}
+                      {item.name}
+                    </span>
+                    <ChevronDown 
+                      className={cn("size-4 shrink-0 transition-transform duration-200", isExpanded ? "rotate-180" : "")}
+                      stroke="1.5"
+                    />
+                  </button>
                 ) : (
                   <a
                     href={item.link || '#'}
                     className="flex w-full items-center gap-2 rounded-md px-2 py-2 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-neutral-50"
-                    onClick={() => {
-                      if (!item.children) onClose();
-                    }}
+                    onClick={onClose}
                   >
                     {item.icon && <item.icon className="size-4" stroke="1.5" />}
                     {item.name}
                   </a>
                 )}
-                {item.children && (
-                  <div className="ml-4 flex flex-col gap-1 border-l border-neutral-200 pl-3 dark:border-neutral-800">
-                    {item.children.map((child, childIdx) => {
+                {hasChildren && isExpanded && (
+                  <motion.div 
+                    initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                    animate={{ height: 'auto', opacity: 1, marginTop: '4px' }}
+                    exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="ml-4 flex flex-col gap-1 border-l border-neutral-200 pl-3 dark:border-neutral-800 w-full overflow-hidden"
+                  >
+                    {item.children!.map((child, childIdx) => {
                        const ChildIcon = child.icon;
                        return (
-                          isDropdownTrigger ? (
-                            <div key={childIdx} className="relative flex items-center gap-2 px-2 py-1.5 text-sm text-neutral-600 dark:text-neutral-400">
-                               {ChildIcon && <ChildIcon className="size-4 shrink-0" stroke="1.5"/>}
-                               <span>{child.name}</span>
-                               {child.comingSoon && (
-                                 <span className="ml-auto rounded-full bg-neutral-200 px-1.5 py-0.5 text-[9px] font-medium text-neutral-500 dark:bg-neutral-700 dark:text-neutral-300">
-                                   Soon
-                                 </span>
-                               )}
-                            </div>
-                           ) : (
-                             <a
-                              key={childIdx}
-                              href={child.link || '#'}
-                              className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-50"
-                              onClick={onClose}
-                             >
-                                {ChildIcon && <ChildIcon className="size-4 shrink-0" stroke="1.5"/>}
-                                <span>{child.name}</span>
-                                {child.comingSoon && (
-                                  <span className="ml-auto rounded-full bg-neutral-200 px-1.5 py-0.5 text-[9px] font-medium text-neutral-500 dark:bg-neutral-700 dark:text-neutral-300">
-                                    Soon
-                                  </span>
-                                )}
-                              </a>
-                           )
+                         <a
+                          key={childIdx}
+                          href={child.link || '#'}
+                          className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-50"
+                          onClick={onClose}
+                         >
+                            {ChildIcon && <ChildIcon className="size-4 shrink-0" stroke="1.5"/>}
+                            <span>{child.name}</span>
+                            {child.comingSoon && (
+                              <span className="ml-auto rounded-full bg-neutral-200 px-1.5 py-0.5 text-[9px] font-medium text-neutral-500 dark:bg-neutral-700 dark:text-neutral-300">
+                                Soon
+                              </span>
+                            )}
+                          </a>
                        );
                      })}
-                  </div>
+                  </motion.div>
                 )}
               </React.Fragment>
             );
           })}
-          {children}
+          {children} {/* Renders the Login/Register buttons */} 
         </motion.div>
       )}
     </AnimatePresence>
