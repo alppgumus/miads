@@ -2,6 +2,7 @@
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import Link from 'next/link'
+import { GradientHeading } from '@/components/ui/gradient-heading'
 
 export default function FAQsFour() {
     const faqItems = [
@@ -36,8 +37,12 @@ export default function FAQsFour() {
         <section className="py-16 md:py-24">
             <div className="mx-auto max-w-5xl px-4 md:px-6">
                 <div className="mx-auto max-w-xl text-center">
-                    <h2 className="text-balance text-3xl font-bold md:text-4xl lg:text-5xl">Frequently Asked Questions</h2>
-                    <p className="text-muted-foreground mt-4 text-balance">Find answers to common questions about connecting your data, leveraging AI insights, and getting the most out of our platform.</p>
+                    <GradientHeading size="lg" weight="bold" className="text-center mb-8">
+                        Frequently Asked Questions
+                    </GradientHeading>
+                    <p className="text-muted-foreground text-center max-w-xl mx-auto mb-8 sm:mb-12 text-balance">
+                        Find answers to common questions about connecting your data, leveraging AI insights, and getting the most out of our platform.
+                    </p>
                 </div>
 
                 <div className="mx-auto mt-12 max-w-xl">

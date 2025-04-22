@@ -5,6 +5,8 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { BorderBeam } from '@/components/magicui/border-beam'
+import { GradientHeading } from '@/components/ui/gradient-heading'
+import { Section } from '@/components/ui/section'
 
 export default function Features() {
     type ImageKey = 'item-1' | 'item-2' | 'item-3' | 'item-4'
@@ -30,12 +32,16 @@ export default function Features() {
     }
 
     return (
-        <section className="py-12 md:py-20 lg:py-32">
+        <Section>
             <div className="bg-linear-to-b absolute inset-0 -z-10 sm:inset-6 sm:rounded-b-3xl dark:block dark:to-[color-mix(in_oklab,var(--color-zinc-900)_75%,var(--color-background))]"></div>
             <div className="mx-auto max-w-5xl space-y-8 px-6 md:space-y-16 lg:space-y-20 dark:[--color-border:color-mix(in_oklab,var(--color-white)_10%,transparent)]">
-                <div className="relative z-10 mx-auto max-w-2xl space-y-6 text-center">
-                    <h2 className="text-balance text-4xl font-semibold lg:text-6xl">Unlock Deeper Marketing Insights</h2>
-                    <p>Leverage AI to analyze campaign data, understand audience behavior, and drive smarter marketing decisions.</p>
+                <div className="relative z-10 mx-auto max-w-xl space-y-6 text-center md:space-y-12">
+                    <GradientHeading size="lg" weight="bold" className="text-center mb-8">
+                        Unlock Deeper Marketing Insights
+                    </GradientHeading>
+                    <p className="text-muted-foreground text-center max-w-xl mx-auto mb-8 sm:mb-12">
+                        Leverage AI to analyze campaign data, understand audience behavior, and drive smarter marketing decisions.
+                    </p>
                 </div>
 
                 <div className="grid gap-12 sm:px-12 md:grid-cols-2 lg:gap-20 lg:px-0">
@@ -106,11 +112,11 @@ export default function Features() {
                         <BorderBeam
                             duration={6}
                             size={200}
-                            className="from-transparent via-yellow-700 to-transparent dark:via-white/50"
+                            className="from-transparent via-[#11FC97]/70 to-transparent dark:via-[#11FC97]/70"
                         />
                     </div>
                 </div>
             </div>
-        </section>
+        </Section>
     )
 }

@@ -4,6 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/contexts/theme-provider";
 import { siteConfig } from "../config/site";
 import { MainNav } from "@/components/sections/navbar/default";
+import CTA from "@/components/sections/cta/default";
+import FooterSection from "@/components/sections/footer/default";
 
 export const metadata: Metadata = {
   title: {
@@ -64,10 +66,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" style={{ colorScheme: "dark" }} className="dark">
-      <body className={`${inter.className} bg-background antialiased`}>
+      <body className={`${inter.className} bg-background antialiased flex flex-col min-h-screen`}>
         <ThemeProvider>
           <MainNav />
-          {children}
+          <main className="flex-grow">
+            {children}
+          </main>
+          <CTA />
+          <FooterSection />
         </ThemeProvider>
       </body>
     </html>

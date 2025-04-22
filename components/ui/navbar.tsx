@@ -113,7 +113,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
         boxShadow: visible
           ? "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
           : "none",
-        width: visible ? "40%" : "100%",
+        width: visible ? "50%" : "100%",
         y: visible ? 20 : 0,
       }}
       transition={{
@@ -201,7 +201,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
                     "relative flex cursor-default items-center gap-1 px-4 py-2 text-neutral-600 dark:text-neutral-300",
                 )}
               >
-                {hoveredItemIndex === idx && !isDropdownActive && (
+                {hoveredItemIndex === idx && (
                     <motion.div
                       layoutId="hovered"
                       className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800"
@@ -255,13 +255,13 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
                   onMouseEnter={handleDropdownMouseEnter}
                   onMouseLeave={handleDropdownMouseLeave}
                 >
-                   <div className="grid grid-cols-3 gap-x-6 gap-y-5">
+                   <div className="grid grid-cols-3 gap-x-6 gap-y-3">
                      {item.children?.map((child, childIdx) => {
                        const Icon = child.icon;
                        return (
                          <div
                            key={childIdx}
-                           className="group relative flex cursor-default flex-col gap-1 rounded-lg p-4 transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800/50"
+                           className="group relative flex cursor-default flex-col gap-1 rounded-lg px-3 py-2 transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800/50"
                           >
                             {child.comingSoon && (
                               <span className="absolute top-2 right-2 rounded-full bg-neutral-200 px-2 py-0.5 text-[10px] font-medium text-neutral-600 dark:bg-neutral-700 dark:text-neutral-300">
@@ -442,10 +442,9 @@ export const MobileNavToggle = ({
 export const NavbarLogo = () => {
   return (
     <Link
-      href="#"
-      className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black"
+      href="/"
+      className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black no-underline"
     >
-      
       <span className="font-medium text-black dark:text-white">Miads</span>
     </Link>
   );

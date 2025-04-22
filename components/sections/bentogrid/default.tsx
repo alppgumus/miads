@@ -12,10 +12,17 @@ import {
 import { motion } from "motion/react";
 import Image from "next/image";
 import { Section } from "../../ui/section";
+import { GradientHeading } from "@/components/ui/gradient-heading";
 
 export function BentoGridThirdDemo() {
   return (
     <Section>
+      <GradientHeading size="lg" weight="bold" className="text-center mb-8">
+      Get a Personal AI Media Buyer
+      </GradientHeading>
+      <p className="text-muted-foreground text-center max-w-xl mx-auto mb-8 sm:mb-12">
+      Test creatives? Scale audiences? Set automation? The AI Marketer audits your account, identifies weaknesses and opportunities, and tells you exactly what to do next!
+      </p>
       <BentoGrid className="max-w-7xl mx-auto md:auto-rows-[25rem]">
         {items.map((item, i) => (
           <BentoGridItem

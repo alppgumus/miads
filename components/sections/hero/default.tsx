@@ -8,6 +8,7 @@ import { ReactNode } from "react";
 import Screenshot from "../../ui/screenshot";
 import { cn } from "@/lib/utils";
 import { Cover } from "../../ui/cover";
+import { BorderBeam } from "@/components/magicui/border-beam";
 
 interface HeroButtonProps {
   href: string;
@@ -105,6 +106,11 @@ export default function Hero({
                 >
                   {mockup}
                 </Mockup>
+                <BorderBeam
+                  duration={6}
+                  size={500}
+                  className="from-transparent via-[#0AB464]/80 to-transparent dark:via-[#0AB464]/80"
+                />
               </MockupFrame>
               <Glow
                 variant="top"

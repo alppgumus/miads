@@ -4,6 +4,8 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { InfiniteSlider } from '@/components/motion-primitives/infinite-slider'
+import { Section } from '@/components/ui/section'
+import { GradientHeading } from '@/components/ui/gradient-heading'
 
 export default function IntegrationsSection() {
     return (
@@ -100,8 +102,12 @@ export default function IntegrationsSection() {
                         </div>
                     </div>
                     <div className="mx-auto mt-12 max-w-lg space-y-6 text-center">
-                        <h2 className="text-balance text-3xl font-semibold md:text-4xl">Connect Your Marketing Platforms</h2>
-                        <p className="text-muted-foreground">Bring data from your favorite marketing tools together for unified analysis and smarter optimizations.</p>
+                        <GradientHeading size="lg" weight="bold" className="text-center mb-8">
+                            Connect Your Marketing Platforms
+                        </GradientHeading>
+                        <p className="text-muted-foreground text-center max-w-xl mx-auto mb-8 sm:mb-12">
+                            Bring data from your favorite marketing tools together for unified analysis and smarter optimizations.
+                        </p>
 
                         <Button
                             variant="outline"

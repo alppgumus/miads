@@ -1,26 +1,24 @@
 // app/pricing/page.tsx
 import React from 'react';
+import Pricing from '@/components/sections/pricing/default'; // Import the actual Pricing component
+import PricingComparator from '@/components/ui/pricing-comparator'; // Import the new comparator component
+import PricingFaq from '@/components/sections/faqs/pricing-faq'; // Import the new FAQ component
 
-// TODO: Replace this with the actual Pricing component
-const PricingPlaceholder = () => {
-  return (
-    <div className="container mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold text-center mb-8">Pricing</h1>
-      <p className="text-center text-muted-foreground">
-        Pricing component will be added here.
-      </p>
-      {/* Add layout or structure if needed */}
-    </div>
-  );
-};
+// Removed PricingPlaceholder
 
 export default function PricingPage() {
   // You can fetch data here if needed in the future
-  return <PricingPlaceholder />;
+  return (
+    <>
+      <Pricing /> 
+      <PricingComparator /> 
+      <PricingFaq /> {/* Add the FAQ component below the comparator */}
+    </>
+  );
 }
 
 // Optional: Add metadata for the page
 export const metadata = {
   title: 'Pricing - Miads',
-  description: 'Choose the best plan for your advertising needs.',
+  description: 'Choose the best plan for your advertising needs. Compare features and find answers to frequently asked questions.', // Updated description
 }; 

@@ -1,13 +1,18 @@
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Card, CardContent } from '@/components/ui/card'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { GradientHeading } from '@/components/ui/gradient-heading'
 
 export default function Testimonials() {
     return (
         <section className="py-16 md:py-32">
             <div className="mx-auto max-w-6xl space-y-8 px-6 md:space-y-16">
                 <div className="relative z-10 mx-auto max-w-xl space-y-6 text-center md:space-y-12">
-                    <h2 className="text-4xl font-medium lg:text-5xl">Trusted by Marketing Leaders</h2>
-                    <p>See how leading Turkish and global companies leverage our platform for smarter campaign insights and optimization.</p>
+                    <GradientHeading size="lg" weight="bold" className="text-center mb-8">
+                      Trusted by Marketing Leaders
+                    </GradientHeading>
+                    <p className="text-muted-foreground text-center max-w-xl mx-auto mb-8 sm:mb-12">
+                      See how leading companies leverage our platform for smarter campaign insights and optimization.
+                    </p>
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-rows-2">
