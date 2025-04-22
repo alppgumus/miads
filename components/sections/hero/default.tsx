@@ -28,7 +28,6 @@ interface HeroProps {
 }
 
 export default function Hero({
-  title = "",
   description = "You just found Miads. The secret tool top ad agencies use to run all accounts. Streamline advertising operations. Maximize Ad ROI and profit.",
   mockup = (
     <Screenshot

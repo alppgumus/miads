@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { Tab } from '@/components/ui/pricing-tab';
-import { cn } from '@/lib/utils';
 
 // Translate frequency labels
 const FREQUENCIES = [

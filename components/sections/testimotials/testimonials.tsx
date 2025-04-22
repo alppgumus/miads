@@ -19,7 +19,7 @@ export default function Testimonials() {
                     <Card className="grid grid-rows-[1fr] gap-8 sm:col-span-2 sm:p-6 lg:row-span-2 border border-[#4f4f4f40]">
                         <CardContent>
                             <blockquote className="grid h-full grid-rows-[1fr_auto] items-center gap-6">
-                                <p className="text-xl font-medium">The platform's analytics capabilities allowed us to pinpoint inefficiencies in our campaigns and significantly improve our ROI. A must-have tool!</p>
+                                <p className="text-xl font-medium">The platform&apos;s analytics capabilities allowed us to pinpoint inefficiencies in our campaigns and significantly improve our ROI. A must-have tool!</p>
 
                                 <div className="grid grid-cols-[auto_1fr] items-center gap-3">
                                     <Avatar className="size-12">

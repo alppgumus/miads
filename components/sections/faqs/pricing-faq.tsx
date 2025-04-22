@@ -6,7 +6,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
-import Link from 'next/link'
 
 // Pricing specific FAQ items based on the image
 const pricingFaqItems = [

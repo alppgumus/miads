@@ -4,8 +4,8 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { InfiniteSlider } from '@/components/motion-primitives/infinite-slider'
-import { Section } from '@/components/ui/section'
 import { GradientHeading } from '@/components/ui/gradient-heading'
+import { ReactNode } from "react"
 
 export default function IntegrationsSection() {
     return (

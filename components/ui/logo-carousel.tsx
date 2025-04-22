@@ -5,9 +5,14 @@ import React, {
   useEffect,
   useMemo,
   useState,
-  type SVGProps,
 } from "react"
 import { AnimatePresence, motion } from "framer-motion"
+import {
+  MotionValue,
+  useMotionValue,
+  useScroll,
+  useTransform,
+} from "motion/react"
 
 interface Logo {
   name: string
@@ -103,6 +108,8 @@ const LogoColumn: React.FC<LogoColumnProps> = React.memo(
     )
   }
 )
+
+LogoColumn.displayName = "LogoColumn"
 
 interface LogoCarouselProps {
   columnCount?: number

@@ -1,6 +1,7 @@
 import { Section } from "../../ui/section";
-import { siteConfig } from "@/config/site";
+// import { siteConfig } from "@/config/site"; // Removed unused siteConfig import
 import { GradientHeading } from "@/components/ui/gradient-heading";
+import { cn } from "@/lib/utils";
 
 interface StatItemProps {
   label?: string;
