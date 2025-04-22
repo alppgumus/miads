@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 import { BorderBeam } from '@/components/magicui/border-beam';
 
 const featuresData = [
-  { category: 'Plan Details', isHeader: true },
+  
   { feature: 'Miads Strategy (AI)', basic: false, starter: false, premium: true },
   { feature: 'Optimization', basic: false, starter: true, premium: true },
   { category: 'Meta', isHeader: true },
@@ -65,7 +65,7 @@ export default function PricingComparator() {
             <table className="w-full border-collapse text-sm min-w-[600px]">
               <thead>
                 <tr className="border-b border-neutral-800">
-                  <th className="p-4 text-left font-medium text-muted-foreground w-2/5">
+                  <th className="p-4 text-left font-semibold text-foreground w-1/5">
                     Plan Details
                   </th>
                   <th className="p-4 font-semibold text-center text-foreground w-1/5">Basic</th>
