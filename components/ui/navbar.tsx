@@ -1,27 +1,23 @@
 "use client";
-import { cn } from "@/lib/utils";
+import React, {
+  Children,
+  cloneElement,
+  isValidElement,
+  ReactNode,
+  useState,
+  useRef,
+  useEffect,
+} from 'react'
 import {
-  IconAdjustmentsHorizontal,
-  IconSettings,
-  IconTarget,
-  IconRocket,
-  IconReport,
-  IconLayoutGrid,
-  IconPalette,
-  IconChevronDown,
-  IconMenu2,
-  IconX,
-} from "@tabler/icons-react";
-import {
-  motion,
   AnimatePresence,
-  useScroll,
+  motion,
   useMotionValueEvent,
-} from "framer-motion";
-import Link from "next/link";
-import React, { useState } from "react";
-import type { ReactNode, ElementType, ComponentPropsWithoutRef } from "react";
-import Image from "next/image";
+  useScroll,
+} from 'framer-motion'
+import { cn } from '@/lib/utils'
+import { ChevronDown, Menu, X } from 'lucide-react'
+import { Button, buttonVariants } from '@/components/ui/button'
+import Link from 'next/link'
 
 interface NavbarProps {
   children: ReactNode;
@@ -211,7 +207,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
                     />
                   )}
                 <span className="relative z-20">{item.name}</span>
-                <IconChevronDown
+                <ChevronDown
                   size={14}
                   className={cn(
                       "relative z-20 transition-transform duration-200",
@@ -433,9 +429,9 @@ export const MobileNavToggle = ({
   onClick: () => void;
 }) => {
   return isOpen ? (
-    <IconX className="text-black dark:text-white" onClick={onClick} />
+    <X className="text-black dark:text-white" onClick={onClick} />
   ) : (
-    <IconMenu2 className="text-black dark:text-white" onClick={onClick} />
+    <Menu className="text-black dark:text-white" onClick={onClick} />
   );
 };
 

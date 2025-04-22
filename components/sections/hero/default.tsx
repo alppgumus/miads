@@ -19,7 +19,6 @@ interface HeroButtonProps {
 }
 
 interface HeroProps {
-  title?: string;
   description?: string;
   mockup?: ReactNode | false;
   badge?: ReactNode | false;

@@ -31,6 +31,16 @@ export default function FAQsFour() {
             question: 'What kind of support do you offer?',
             answer: 'We offer comprehensive support including a detailed knowledge base, email support, and live chat assistance during business hours. Enterprise clients have access to dedicated account managers and priority support.',
         },
+        {
+            id: 'item-6',
+            question: 'What makes Miads different from other ad platforms?',
+            answer: 'Miads stands out with its AI-powered automation, comprehensive platform integrations (Meta, Google, TikTok, etc.), and user-friendly interface designed for both beginners and experts. We focus on simplifying the complexities of digital advertising, allowing you to achieve better results with less effort. Plus, our transparent pricing and dedicated support make us a reliable partner for your business&apos;s growth.',
+        },
+        {
+            id: 'item-7',
+            question: 'Is Miads suitable for beginners in digital advertising?',
+            answer: 'Yes, Miads is designed to be user-friendly and accessible to beginners in digital advertising. Our platform offers a range of features and tools that are easy to understand and navigate, making it a great choice for those new to the field.',
+        },
     ]
 
     return (

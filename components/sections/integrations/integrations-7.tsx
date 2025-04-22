@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { InfiniteSlider } from '@/components/motion-primitives/infinite-slider'
 import { GradientHeading } from '@/components/ui/gradient-heading'
 import { ReactNode } from "react"
+import Image from "next/image"
 
 export default function IntegrationsSection() {
     return (
