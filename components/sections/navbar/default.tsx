@@ -17,18 +17,9 @@ import {
   IconShoppingCart,
 } from "@tabler/icons-react";
 
-// Define interface for child items
-interface NavItemChild {
-  name: string;
-  description: string;
-  icon?: React.FC<TablerIconsProps>;
-  comingSoon?: boolean;
-}
-
 export const MainNav = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Reverted array types and added back 'as any'
   const featuresChildren = [
     {
       name: "Strategy",
@@ -103,14 +94,6 @@ export const MainNav = () => {
     },
   ];
 
-  // Define type for top-level nav items to include children type
-  interface NavItem {
-    name: string;
-    triggerOnHover?: boolean;
-    children?: NavItemChild[];
-    link?: string;
-  }
-  
   const navItems = [
     {
       name: "Features",
